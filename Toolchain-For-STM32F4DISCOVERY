@@ -1,0 +1,108 @@
+Toolchain For STM32F4DISCOVERY
+
+Note : Before setting up toolchain, it is recommended to update the system.
+
+Summor ARM Toolchain is being used, to set up toolchain , follow these :
+
+1) Make a directory for downloading the sources : 
+
+  $ mkdir ~/stm32f4discovery
+  $ cd ~/stm32f4discovery
+
+2) Fetch the summon arm toolchain : 
+
+  $ git clone https://github.com/esden/summon-arm-toolchain.git
+  $ cd summon-arm-toolchain
+  $ ./summon-arm-toolchain 
+
+Executing ./summon-arm-toolchain will start the configuration.
+
+If everything goes well then the toolchain will configured and you can check the ~/sat folder in home which will contain : 
+  arm-none-eabi  bin  include  lib  libexec share
+
+~/sat/bin contains the ELF executable which are the used to compile the code written for the application.
+
+To confirm that your toolchain is configured apart from above said ~/sat folder your script should give this as the output on the terminal before ending :
+
+       BUILD   lib/stm32/f1
+      make[1]: Nothing to be done for `all'.
+       BUILD   lib/stm32/f2
+      make[1]: Nothing to be done for `all'.
+       BUILD   lib/stm32/f4
+      make[1]: Nothing to be done for `all'.
+       BUILD   lib/lpc13xx
+      make[1]: Nothing to be done for `all'.
+       BUILD   lib/lpc17xx
+      make[1]: Nothing to be done for `all'.
+       BUILD   lib/lm3s
+      make[1]: Nothing to be done for `all'.
+       INSTALL headers
+       INSTALL libs
+       INSTALL ldscripts
+       INSTALL scripts
+      Cleaning up libopencm3-3596075ee0f189f8a95090c4fb5522844255a029
+
+Possible Errors While Configuring Toolchain :
+
+If after executing the ./summon-arm-toolchain the script isn't able to fetch the NEWLIB then do following :
+
+  1) Download the NEWLIB tar in the sources and save it in sources directory :
+     ftp://sources.redhat.com/pub/newlib/newlib-1.19.0.tar.gz
+  2) Open : $vi summon-arm-toolchain and comment the 321 line. 
+
+This will skip NEWLIB fetching using the script, though the installation will be done by the script only by using the source you downloaded in step 1.
+
+Now execute :
+
+  $./summon-arm-toolchain
+
+After resolving above error possibility is that one can get following error :
+
+   checking for objdir... .libs
+   checking for the correct version of gmp.h... yes
+   checking for the correct version of mpfr.h... no
+   configure: error: Building GCC requires GMP 4.2+, MPFR 2.3.1+ and MPC 0.8.0+.
+   Try the --with-gmp, --with-mpfr and/or --with-mpc options to specify
+   their locations.  Source code for these libraries can be found at
+   their respective hosting sites as well as at
+   ftp://gcc.gnu.org/pub/gcc/infrastructure/.  See also
+   http://gcc.gnu.org/install/prerequisites.html for additional info.  If
+   you obtained GMP, MPFR and/or MPC from a vendor distribution package,
+   make sure that you have installed both the libraries and the header
+   files.  They may be located in separate packages.
+
+To get rid of this, do following assuming you are in summon-arm-toolchain directory  : 
+
+   1) Download these packages from here : http://www.multiprecision.org/index.php?prog=mpc&page=download 
+   2) cd gcc-linaro-4.5-2011.02-0/ 
+   3) tar -jxf ../mpfr-3.1.0.tar.bz2 
+   4) mv -v mpfr-3.1.0 mpfr
+   5) tar -jxf ../gmp-5.0.2.tar.bz2
+   6) mv -v gmp-5.0.2 gmp
+   7) tar -zxf ../mpc-0.9.tar.gz
+   8) mv -v mpc-0.9 mpc
+
+Now execute the script :
+
+   $./summon-arm-toolchain
+
+This error can also occur during the configuration :
+
+   checking for creal in -lm... yes
+   checking for __gmpz_init in -lgmp... yes
+   checking for MPFR... no
+   configure: error: libmpfr not found or uses a different ABI.
+   make[1]: *** [configure-mpc] Error 1
+   make[1]: Leaving directory 
+    `/home/chetanpatil/LM3S9B96/stm32f4discovery_root/esden-summon-arm-   toolchain-5f14832/build'
+   make: *** [all] Error 2
+
+Do following :
+
+   1) sudo yum install ncurses-devel
+   2) sudo yum install mpfr-devel
+
+Then run the script again:
+
+   $./summon-arm-toolchain
+
