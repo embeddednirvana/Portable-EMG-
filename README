@@ -1,19 +1,30 @@
+Portable EMG is an open hardware based project.
+
 Raw Idea :
+----------
 
 The idea is to come up with a open hardware and open software based Portable EMG Data Logger targeted for Medical Use. It will be based on ARM and will be built using open technologies.
+
 It would be somewhat like this :
+--------------------------------
+
   EMG Sensor ----> MCU & Peripherals ----> Analytics To SmartPhone/Tablet/PC/Mac          
 Micro Controller & Development/Evaluation Board :
+-------------------------------------------------
 
-ARM Cortex M4F
-STM32F4DISCOVERY will be used to develop the application.
+  ARM Cortex M4F
+  STM32F4DISCOVERY will be used to develop the application.
 
 How Data Will Be Viewed On SmartPhone/Tablets/PC/Mac ?
+------------------------------------------------------
 
 We are planning to make use of GNU Health. GNU Health is a free Health and Hospital Information System with the following functionality :
 Electronic Medical Record (EMR)
 Hospital Information System (HIS)
 Health Information System
 
-Wiki Page : http://wiki.embeddednirvana.org/Portable_EMG_Data_Logger
+Wiki Page : 
+-----------
+
+http://wiki.embeddednirvana.org/Portable_EMG_Data_Logger
 
